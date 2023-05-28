@@ -1,1 +1,1 @@
-# pinak-pinescript
+Our mentor shared us a pdf file with various youtube links for us to understand pine script. These videos were essential for us to understand about this new language. I watched the video regarding Trading pinescript version 5 and "trading view strategy" which was a 3-hour seminar. It taught us about the different mathematical functions, logic functions and plotting functions available. I wasnt able to code or practice anything due to time constraints. 
