@@ -1,0 +1,20 @@
+indicator("Bollinger Bands")
+
+// Input parameters
+length = input(20, title="Length")
+mult = input(2.0, title="Standard Deviation")
+
+// Calculate the moving average
+sma = ta.sma(close, length)
+
+// Calculate the standard deviation
+stddev = mult * ta.stdev(close, length)
+
+// Calculate the upper and lower Bollinger Bands
+upperBB = sma + stddev
+lowerBB = sma - stddev
+
+// Plotting the Bollinger Bands
+plot(sma, color=color.blue, title="SMA")
+plot(upperBB, color=color.red, title="Upper Band")
+plot(lowerBB, color=color.green, title="Lower Band")
