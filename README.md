@@ -6,3 +6,6 @@ Some significant strategies were as follows:
 2)Inside Candel :-  Inside_Candel_strategy
 3)Bollinger Band Strategy 
 4)Monthly Candel strategy {Power Of Stock app- Free Course section}
+
+I also backtested the strategies mentioned in the document in order to get a good grasp on the platform and as to how to make a good and profitbale strategy.
+Backtesting the trading strategy was a crucial step for us because it provideed us valuable insights and helped me make more informed decisions. 
