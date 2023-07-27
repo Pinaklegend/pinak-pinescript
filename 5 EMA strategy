@@ -1,0 +1,11 @@
+//@version=4
+strategy("5EMA Strategy", overlay=true)
+
+// Define 5-period Exponential Moving Average (EMA)
+ema5 = ema(close, 5)
+
+// Entry condition: Buy when the price crosses above the 5EMA
+strategy.entry("Buy", strategy.long, when=close > ema5)
+
+// Exit condition: Sell when the price crosses below the 5EMA
+strategy.close("Buy", when=close < ema5)
