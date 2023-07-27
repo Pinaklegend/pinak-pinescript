@@ -1,0 +1,43 @@
+//@version=4
+strategy("Bollinger Bands")
+
+
+// Input parameters
+length = input(20, title="Length")
+mult = input(2.0, title="Standard Deviation")
+
+// Calculate the moving average
+sma = sma(close, length)
+
+// Calculate RSI
+rsiValue = rsi(close, length)
+
+// Calculate the standard deviation
+stddev = mult * stdev(close, length)
+
+// Calculate the upper and lower Bollinger Bands
+upperBB = sma + stddev
+lowerBB = sma - stddev
+
+short = high>upperBB and rsiValue>25
+long= low<lowerBB and rsiValue<75
+
+strategy.entry("Long", strategy.long, 1000.0, when = long )
+strategy.entry("Short", strategy.short, 1000.0, when = short )
+
+strategy.close("Long", when = short)
+strategy.close("Short", when = long)
+
+plot(upperBB, color=color.red, title="Upper Band")
+plot(lowerBB, color=color.green, title="Lower Band")
+
+
+//backtested on nifty fifty
+//percentage profitable 81.26% with a profit factor of 7,=.343
+
+
+
+
+
+
+
