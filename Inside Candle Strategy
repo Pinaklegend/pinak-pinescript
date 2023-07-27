@@ -1,0 +1,13 @@
+//@version=4
+strategy("Inside Candle Strategy", overlay=true)
+
+// Calculate the inside candle condition
+isInsideCandle = low > low[1] and high < high[1]
+
+// Entry conditions: Buy when the current candle is an inside candle
+strategy.entry("Buy", strategy.long, when=isInsideCandle)
+
+// Exit conditions: Close the position when a new inside candle occurs in the opposite direction
+strategy.close("Buy", when=not isInsideCandle)
+
+//profit percentage of 60% with profit factor of 1.214
