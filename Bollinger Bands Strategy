@@ -1,0 +1,35 @@
+//@version=5
+strategy("Bollinger Bands Strategy", overlay=true)
+
+// Bollinger Bands Parameters
+length = input(20, title="BB Length")
+mult = input(2.0, title="BB Standard Deviation" )
+
+// Calculate Bollinger Bands
+sma = ta.sma(close, length)
+stddev = ta.stdev(close, length)
+upper_band = sma + mult * stddev
+lower_band = sma - mult * stddev
+
+// Entry Conditions
+longCondition = ta.crossover(close, lower_band)
+shortCondition = ta.crossunder(close, upper_band)
+
+if (longCondition)
+    strategy.entry("Buy", strategy.long)
+if (shortCondition)
+    strategy.entry("Sell", strategy.short)
+
+// Exit Conditions
+exitLongCondition = ta.crossunder(close, sma)
+exitShortCondition = ta.crossover(close, sma)
+
+if (exitLongCondition)
+    strategy.close("Buy")
+if (exitShortCondition)
+    strategy.close("Sell")
+
+// Plotting Bollinger Bands
+plot(sma, color=color.blue, title="SMA")
+plot(upper_band, color=color.red, title="Upper Band")
+plot(lower_band, color=color.green, title="Lower Band")
