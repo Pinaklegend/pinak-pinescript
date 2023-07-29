@@ -1,0 +1,23 @@
+//@version=5
+strategy("Dead Crossover Strategy", overlay=true)
+
+// Input Parameters
+short_ema_length = input(12, title="Short EMA Length", minval=1)
+long_ema_length = input(26, title="Long EMA Length", minval=1)
+
+// Calculate Exponential Moving Averages (EMA)
+short_ema = ta.ema(close, short_ema_length)
+long_ema = ta.ema(close, long_ema_length)
+
+// Entry Condition (Dead Crossover)
+dead_cross = ta.crossover(short_ema, long_ema)
+
+if (dead_cross)
+    strategy.entry("Sell", strategy.short)
+
+// Exit Condition (Replace with Your Own Exit Logic)
+// For demonstration purposes, exit at the next crossover (Golden Crossover).
+exit_cross = ta.crossunder(short_ema, long_ema)
+
+if (exit_cross)
+    strategy.close("Sell")
