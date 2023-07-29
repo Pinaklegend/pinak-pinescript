@@ -1,0 +1,26 @@
+//@version=4
+strategy("MACD and Signal Intersection Alert")
+
+fast = 12 
+slow = 26
+signalPeriod = 9
+
+fastMA = ema(close, fast)
+slowMA = ema(close, slow)
+macd = fastMA - slowMA
+signal = ema(macd, signalPeriod)
+
+plot(macd, color=color.blue)
+plot(signal, color=color.green)
+
+
+// Detect MACD and Signal line intersection
+macd_crossover_signal = crossover(macd, signal)
+macd_crossunder_signal = crossunder(macd, signal)
+
+// Create an alert when the MACD and Signal intersect
+if macd_crossover_signal
+    alert("MACD_Crossover_Signal", "MACD crossed above Signal")
+
+if macd_crossunder_signal
+    alert("MACD_Crossunder_Signal", "MACD crossed below Signal")
