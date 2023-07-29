@@ -1,0 +1,6 @@
+//@version=5
+indicator("Doji Candlestick", overlay=true)
+
+dojiCondition = abs(close - open) / (high - low) < 0.1
+
+plotshape(dojiCondition, style=shape.labelup, location=location.belowbar, color=color.red, text="Doji")
