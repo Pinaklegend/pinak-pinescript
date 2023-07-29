@@ -1,0 +1,26 @@
+//@version=4
+strategy("Intraday Gap Strategy", overlay=true)
+
+// Detect Gap Up and Gap Down
+is_gap_up = open > close[1]
+is_gap_down = open < close[1]
+
+// Long Entry: Open Gap Up
+long_signal = is_gap_up
+
+// Short Entry: Open Gap Down
+short_signal = is_gap_down
+
+// Strategy Entry and Exit
+strategy.entry("Long", strategy.long, when=long_signal)
+strategy.entry("Short", strategy.short, when=short_signal)
+
+// Exit the positions at the end of the day
+endOfDay = time("D") != time("D")[1]
+strategy.exit("Long Exit", "Long", when=endOfDay)
+strategy.exit("Short Exit", "Short", when=endOfDay)
+
+// Plot Gaps for visualization (optional)
+plotshape(is_gap_up, style=shape.triangleup, color=color.green, location=location.belowbar, size=size.small, title="Gap Up")
+plotshape(is_gap_down, style=shape.triangledown, color=color.red, location=location.abovebar, size=size.small, title="Gap Down")
+
