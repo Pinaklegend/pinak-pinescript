@@ -1,0 +1,6 @@
+//@version=5
+indicator("Inside Candlestick", overlay=true)
+
+is_inside_candle = high <= high[1] and low >= low[1]
+
+plotshape(is_inside_candle, style=shape.labelup, location=location.belowbar, color=color.blue, text="Inside Candle")
