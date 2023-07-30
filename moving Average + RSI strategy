@@ -1,0 +1,49 @@
+//@version=4
+strategy("Advanced Moving Average + RSI Strategy", overlay=true)
+
+// Moving Average Settings
+fastLength = input(10, title="Fast MA Length")
+slowLength = input(20, title="Slow MA Length")
+
+// RSI Settings
+rsiLength = input(14, title="RSI Length")
+rsiOverbought = input(70, title="RSI Overbought Level")
+rsiOversold = input(30, title="RSI Oversold Level")
+
+// Risk-Reward Ratio Settings
+riskRewardRatio = input(2.0, title="Risk-Reward Ratio")
+
+// Calculate Moving Averages
+fastMA = sma(close, fastLength)
+slowMA = sma(close, slowLength)
+
+// Calculate RSI
+rsiValue = rsi(close, rsiLength)
+
+// Strategy Conditions
+isFastMAGreater = crossover(fastMA, slowMA)
+isSlowMAGreater = crossunder(fastMA, slowMA)
+isOverbought = rsiValue >= rsiOverbought
+isOversold = rsiValue <= rsiOversold
+
+// Calculate Stop Loss and Take Profit Levels
+atrValue = atr(14)
+stopLossLevel = strategy.position_avg_price * (1 - atrValue * riskRewardRatio)
+takeProfitLevel = strategy.position_avg_price * (1 + atrValue * riskRewardRatio)
+
+// Execute Long and Short Trades
+if (isFastMAGreater and not isOversold)
+    strategy.entry("Buy", strategy.long)
+    strategy.exit("Sell", "Buy", stop=stopLossLevel, limit=takeProfitLevel)
+else if (isSlowMAGreater and not isOverbought)
+    strategy.entry("Sell", strategy.short)
+    strategy.exit("Cover", "Sell", stop=stopLossLevel, limit=takeProfitLevel)
+
+// Plot Moving Averages
+plot(fastMA, color=color.blue, title="Fast MA")
+plot(slowMA, color=color.red, title="Slow MA")
+
+plot(rsiValue, title="RSI", color=color.purple)
+
+
+// risk reward >1 and profit percentage of 40 percent
